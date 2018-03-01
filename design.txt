@@ -1,0 +1,7 @@
+Opensource simplest password manager
+
+1, Based on an encryped file, which can be specificed by user. So that, user can put it in some kind of cloud storage service, like draopbox;
+2, Excryption is based on an user specified main-password, the software use this password to encrypt the file.
+3, Do not check password's correctness, if some one enter the wrong password, he/she will see the wrong password.
+4, Can generate complex password.
+5, Cross platform, Windows/MacOS/Linux is supported.
