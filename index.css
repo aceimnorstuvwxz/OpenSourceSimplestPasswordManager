@@ -1,0 +1,14 @@
+
+
+#welcome_page{
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+.mywrapper{
+    max-width: 60vw;
+    margin: auto;
+
+    margin-top: 30vh;
+
+}

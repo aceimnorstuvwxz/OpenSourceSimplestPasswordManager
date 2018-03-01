@@ -1,19 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
 
-    <script>
-      // You can also require other files to run in this process
-      require('./renderer.js')
-    </script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Open Source Simplest Password Manager</title>
+
+  <link rel="stylesheet" href="libs/materialize.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script type="text/javascript" src="libs/jquery.js" onload="window.$ = window.jQuery = module.exports;"></script>
+  <script type="text/javascript" src="libs/hammer.js" onload="window.Hammer = module.exports;"></script>
+  <script type="text/javascript" src="libs/materialize.min.js"></script>
+
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <div id="welcome_page">
+    <div class="mywrapper">
+
+      <form action="#">
+        <div class="row">
+          <div class="file-field input-field">
+            <div class="btn grey lighten-2">
+              <span>File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+            </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 ">
+            <input id="password" type="password" class="validate ">
+            <label for="password">Password</label>
+          </div>
+        </div>
+        <div class="row" style="text-align:center;">
+
+          <a class="waves-effect waves-light btn" >Enter</a>
+
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+</body>
+
 </html>
