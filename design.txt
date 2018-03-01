@@ -5,3 +5,6 @@ Opensource simplest password manager
 3, Do not check password's correctness, if some one enter the wrong password, he/she will see the wrong password.
 4, Can generate complex password.
 5, Cross platform, Windows/MacOS/Linux is supported.
+6, Why I make this? For my own use!
+7, Why opensource? Truest issue.
+8, Dev is so simple, may only takes some hours, but will save many energy to remember all password. 
