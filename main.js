@@ -35,3 +35,7 @@ app.on('activate', function () {
   }
 })
 
+
+electron.ipcMain.on('log', function(e, data){
+  console.log('LOG', data)
+})

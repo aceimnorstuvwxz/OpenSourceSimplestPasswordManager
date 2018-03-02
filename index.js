@@ -4,11 +4,23 @@ const { dialog, shell } = require('electron').remote
 const jsonfile = require('jsonfile')
 const mycrypto = require('./mycrypto')
 const path = require('path')
+const electron = require('electron')
 
 
 let g_system_file_path
 let g_system_password
 
+
+window.addEventListener('unload', function () {
+    save()
+    electron.ipcRenderer.send('log', 'unload')
+})
+
+
+window.addEventListener('beforeunload', function () {
+    $(':focus').focusout()
+    electron.ipcRenderer.send('log', 'beforeunload')
+})
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -99,7 +111,7 @@ function on_add_record() {
     $('.fixed-action-btn').closeFAB()
 }
 
-function prepend_record_ui(record){
+function prepend_record_ui(record) {
     let new_item_element = $('#new_item_template').clone()
     new_item_element.removeAttr('id')
     new_item_element.web_record = record
@@ -115,10 +127,29 @@ function setup_record_ui(item_element) {
     item_element.find('.my-input-title').val(`${record.title}`).keyup(function (event) {
         let title = event.target.value
         item_element.find('.item-title').text(title.length > 0 ? title : 'New record')
+    }).focusout(function () {
+        let title = item_element.find('.my-input-title').val()
+        if (title.length > 0) {
+            item_element.web_record.title = title
+        }
     })
-    item_element.find('.my-input-username').val(`${record.username}`)
-    item_element.find('.my-input-password').val(`${record.password}`)
-    item_element.find('.my-input-notes').val(`${record.notes}`)
+    item_element.find('.my-input-username').val(`${record.username}`).focusout(function () {
+        let username = item_element.find('.my-input-username').val()
+        if (username.length > 0) {
+            item_element.web_record.username = username
+        }
+    })
+    item_element.find('.my-input-password').val(`${record.password}`).focusout(function () {
+        let password = item_element.find('.my-input-password').val()
+        if (password.length > 0) {
+            item_element.web_record.password = password
+            item_element.web_record.covered_password = mycrypto.encrypt(g_system_password, item_element.web_record.password)
+        }
+    })
+    item_element.find('.my-input-notes').val(`${record.notes}`).focusout(function () {
+        let notes = item_element.find('.my-input-notes').val()
+        item_element.web_record.notes = notes
+    })
 
     item_element.find('.mybtn-save').click(function () {
         let title = item_element.find('.my-input-title').val()
@@ -137,9 +168,9 @@ function setup_record_ui(item_element) {
         }
     })
 
-    item_element.find('.mybtn-show').mouseover(function(){
+    item_element.find('.mybtn-show').mouseover(function () {
         item_element.find('.my-input-password').attr('type', 'text')
-    }).mouseout(function(){
+    }).mouseout(function () {
         item_element.find('.my-input-password').attr('type', 'password')
     })
 
@@ -157,7 +188,7 @@ function save() {
     }
     console.log('save', g_system_file_path, temp_all_records)
 
-    jsonfile.writeFile(g_system_file_path , temp_all_records, {flag: 'w'}, function (err) {
+    jsonfile.writeFile(g_system_file_path, temp_all_records, { flag: 'w' }, function (err) {
         if (err) {
             console.error(err)
         }
@@ -166,12 +197,12 @@ function save() {
 
 
 function load_data_and_record_ui() {
-    jsonfile.readFile(g_system_file_path, function(err, obj){
+    jsonfile.readFile(g_system_file_path, function (err, obj) {
         if (err) {
             console.error(err)
         } else {
             console.log(obj)
-            for(let key in obj) {
+            for (let key in obj) {
                 let record = obj[key]
                 record.system_password = mycrypto.decrypt(g_system_password, record.covered_system_password)
                 record.password = mycrypto.decrypt(g_system_password, record.covered_password)
