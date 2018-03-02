@@ -6,20 +6,18 @@
 }
 
 html, body{
-    min-height: 100vh;
 }
 
 #welcome_page{
     min-width: 100vw;
-    min-height: 100vh;
+    min-height: 100vh;    
+    height: 100vh;
 }
 
 .mywrapper{
     max-width: 60vw;
     margin: auto;
-
     margin-top: 30vh;
-
 }
 
 #bottom_menu{
@@ -27,20 +25,40 @@ html, body{
 }
 
 #main_page{
-    display: grid;
-    grid-auto-rows: auto 1fr 1fr;
-    min-height: 100vh;
+}
+
+#search_btn{
+   height: 35px;
+   width: 35px;
+}
+#search_btn i{
+    font-size: 22px;
+    line-height: 36px;
+}
+
+#search_input{
+    height: 2.2em !important;
+    margin-bottom: 0px !important;
+}
+
+#templates{
+    display: none;
 }
 
 
 #main_header{
-    padding: 0px 20px;
-
+    padding: 0px 50px;
+    padding-left: 30px;
+    position: fixed;
+    top: 0px;
+    background: white;
+    width: 100vw;
+    height:60px;
 }
 
 #main_items{
-    overflow:scroll;
-    padding: 0px 20px;
+    margin-top: 70px;
+    padding: 0px 50px;
 }
 
 

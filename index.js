@@ -97,6 +97,7 @@ function on_add_record() {
     setup_record_ui(new_item_element)
     new_item_element.prependTo('#item_list')
     $('#item_list').collapsible('open', 0)
+    $('.fixed-action-btn').closeFAB()
 }
 
 function setup_record_ui(item_element) {
