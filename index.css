@@ -77,10 +77,22 @@ html, body{
 }
 
 .my-input-text{
+    font-size: 16px!important;
     height: 1.5em !important;
     margin-bottom: 5px !important;
 }
+.mylabel{
+    top: -10px !important;
+    left: 0px !important;
+}
 
+.bold{
+    font-size: bold !important;
+}
+
+.mylabel:not(.label-icon).active{
+    transform:translateY(-3px) scale(0.8) !important;
+}
 .mysmall-icon-button{
     color: gray;
     cursor: pointer;

@@ -130,6 +130,12 @@ function setup_record_ui(item_element) {
         }
     })
 
+    item_element.find('.mybtn-show').mouseover(function(){
+        item_element.find('.my-input-password').attr('type', 'text')
+    }).mouseout(function(){
+        item_element.find('.my-input-password').attr('type', 'password')
+    })
+
 }
 
 
