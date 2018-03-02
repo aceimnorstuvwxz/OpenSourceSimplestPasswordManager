@@ -65,6 +65,8 @@ function on_enter_page() {
     $('#welcome_page').remove()
     $('#main_page').show()
     $('#bottom_menu').show()
+
+    load_data_and_record_ui()
 }
 
 function next_record_index() {
@@ -81,9 +83,7 @@ function next_record_index() {
 let g_all_records_map = {} //index->record
 
 function on_add_record() {
-    let new_item_element = $('#new_item_template').clone()
-    new_item_element.removeAttr('id')
-    new_item_element.web_record = {
+    let new_record = {
         index: next_record_index(),
         title: "",
         username: "",
@@ -93,11 +93,18 @@ function on_add_record() {
         covered_system_password: mycrypto.encrypt(g_system_password, g_system_password),
         notes: ""
     }
-    g_all_records_map[new_item_element.web_record.index] = new_item_element.web_record
-    setup_record_ui(new_item_element)
-    new_item_element.prependTo('#item_list')
+    g_all_records_map[new_record.index] = new_record
+    prepend_record_ui(new_record)
     $('#item_list').collapsible('open', 0)
     $('.fixed-action-btn').closeFAB()
+}
+
+function prepend_record_ui(record){
+    let new_item_element = $('#new_item_template').clone()
+    new_item_element.removeAttr('id')
+    new_item_element.web_record = record
+    setup_record_ui(new_item_element)
+    new_item_element.prependTo('#item_list')
 }
 
 function setup_record_ui(item_element) {
@@ -153,6 +160,28 @@ function save() {
     jsonfile.writeFile(g_system_file_path , temp_all_records, {flag: 'w'}, function (err) {
         if (err) {
             console.error(err)
+        }
+    })
+}
+
+
+function load_data_and_record_ui() {
+    jsonfile.readFile(g_system_file_path, function(err, obj){
+        if (err) {
+            console.error(err)
+        } else {
+            console.log(obj)
+            for(let key in obj) {
+                let record = obj[key]
+                record.system_password = mycrypto.decrypt(g_system_password, record.covered_system_password)
+                record.password = mycrypto.decrypt(g_system_password, record.covered_password)
+                if (record.system_password == g_system_password) {
+                    g_all_records_map[record.index] = record
+                    prepend_record_ui(record)
+                } else {
+                    console.log('bad record', record)
+                }
+            }
         }
     })
 }
