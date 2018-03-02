@@ -1,4 +1,10 @@
 
+*{
+    letter-spacing:2px;
+    word-spacing:5px;
+
+}
+
 html, body{
     min-height: 100vh;
 }
@@ -40,4 +46,36 @@ html, body{
 
 .item-header-item {
     margin-right: 5px;
+}
+
+.item-header-input{
+    /* max-width: 75vh; */
+    height: 1.5em !important;
+    margin-bottom: 0px !important;
+}
+
+.mysmall-text-button{
+    margin-right:5px;
+}
+
+.my-input-text{
+    height: 1.5em !important;
+    margin-bottom: 5px !important;
+}
+
+.mysmall-icon-button{
+    color: gray;
+    cursor: pointer;
+
+    height: 1.5em !important;
+    margin-bottom: 0px !important;
+    font-size: 14px;
+}
+
+.mysmall-icon-button:hover{
+    text-shadow: 0px 1px 1px #AAA;
+}
+
+.mysmall-icon-button:active{
+    text-shadow: none;
 }

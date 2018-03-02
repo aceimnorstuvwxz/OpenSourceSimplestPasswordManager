@@ -53,24 +53,24 @@
   <div id="main_page">
 
     <div class="col s12" id="main_header">
-        <div class="file-field input-field">
+      <div class="file-field input-field">
 
-            <div class="btn btn-floating">
-                <!-- <a class="btn-floating green " id="btn_change_pass"> -->
-                    <i class="material-icons">search</i>
-                  <!-- </a> -->
-              <!-- <span>File</span> -->
-              <!-- <input type="file"> -->
-            </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" placeholder="Search...">
-            </div>
-          </div>
+        <div class="btn btn-floating">
+          <!-- <a class="btn-floating green " id="btn_change_pass"> -->
+          <i class="material-icons">search</i>
+          <!-- </a> -->
+          <!-- <span>File</span> -->
+          <!-- <input type="file"> -->
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text" placeholder="Search...">
+        </div>
+      </div>
 
     </div>
 
     <div id="main_items">
-      <ul class="collapsible" data-collapsible="accordion">
+      <ul class="collapsible" data-collapsible="accordion" id="item_list">
         <li class="item">
           <div class="collapsible-header">
             <!-- <i class="material-icons">filter_drama</i> -->
@@ -97,6 +97,35 @@
     </div>
 
     <div id='templates'>
+      <ul class="collapsible" data-collapsible="accordion">
+        <li class="item" id="new_item_template">
+          <div class="collapsible-header">
+            <span class="item-header-item item-index">#NA</span>
+            <span class="item-header-item item-title">New record</span>
+
+          </div>
+          <div class="collapsible-body">
+            <div class="item-content-header">
+              <input type="text" placeholder="title" class="my-input-text my-input-title" />
+
+              <input type="text" placeholder="username" class="my-input-text my-input-username" />
+              <input type="password" placeholder="password" class="my-input-text my-input-password" />
+
+              <input type="text" placeholder="notes" class="my-input-text my-long my-input-notes" />
+              <!-- <i class="material-icons mysmall-icon-button">remove_red_eye</i> -->
+              <a href="#" class="mysmall-text-button mybtn-show">Show</a>
+              <a href="#" class="mysmall-text-button mybtn-edit">Edit</a>
+              <a href="#" class="mysmall-text-button mybtn-save">Save</a>
+
+              <a href="#" class="mysmall-text-button mybtn-delete">Delete</a>
+              <a href="#" class="mysmall-text-button mybtn-generate">Generate</a>
+
+            </div>
+
+
+          </div>
+        </li>
+      </ul>
     </div>
 
     <div class="fixed-action-btn vertical click-to-toggle" id="bottom_menu">
@@ -120,10 +149,10 @@
           </a>
         </li>
         <li>
-            <a class="btn-floating blue " id="btn_help">
-              <i class="material-icons">help</i>
-            </a>
-          </li>
+          <a class="btn-floating blue " id="btn_help">
+            <i class="material-icons">help</i>
+          </a>
+        </li>
       </ul>
     </div>
 
