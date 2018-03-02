@@ -4,14 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Open Source Simplest Password Manager</title>
-
-  <link rel="stylesheet" href="libs/materialize.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script type="text/javascript" src="libs/jquery.js" onload="window.$ = window.jQuery = module.exports;"></script>
-  <script type="text/javascript" src="libs/hammer.js" onload="window.Hammer = module.exports;"></script>
+
+  <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+  <link rel="stylesheet" href="libs/materialize.min.css" />
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_578109_11kwmbxcpzxgvi.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <script type="text/javascript" src="libs/jquery.js"></script>
+  <script type="text/javascript" src="libs/hammer.js"></script>
   <script type="text/javascript" src="libs/materialize.min.js"></script>
+  <script>if (window.module) module = window.module;</script>
 
   <link rel="stylesheet" href="index.css">
+  <script type="text/javascript" src="index.js"></script>
+
 </head>
 
 <body>
@@ -32,7 +38,7 @@
         </div>
         <div class="row">
           <div class="input-field col s12 ">
-            <input id="password" type="password" class="validate ">
+            <input id="password" type="password" class="validate " value="123456">
             <label for="password">Password</label>
           </div>
         </div>
@@ -46,39 +52,84 @@
 
   <div id="main_page">
 
-      <form class="col s12">
-        <div class="row">
-          <div class="input-field col s8">
-            <input placeholder="Search" id="first_name" type="text" class="validate">
-            <!-- <label for="first_name">First Name</label> -->
+    <div class="col s12" id="main_header">
+        <div class="file-field input-field">
+
+            <div class="btn btn-floating">
+                <!-- <a class="btn-floating green " id="btn_change_pass"> -->
+                    <i class="material-icons">search</i>
+                  <!-- </a> -->
+              <!-- <span>File</span> -->
+              <!-- <input type="file"> -->
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="Search...">
+            </div>
           </div>
-          
-          <div class="input-field col s2">
-              <a class="waves-effect waves-light btn">Find</a>
+
+    </div>
+
+    <div id="main_items">
+      <ul class="collapsible" data-collapsible="accordion">
+        <li class="item">
+          <div class="collapsible-header">
+            <!-- <i class="material-icons">filter_drama</i> -->
+            <span class="item-header-item item-id">#21</span>
+            <span class="item-header-item item-name">CSDN</span>
+            <span class="new badge item-number teal lighten-2" data-badge-caption="">4</span>
           </div>
-
-          <div class="input-field col s2">
-              <a class="waves-effect waves-light btn">New</a>
+          <div class="collapsible-body">
+            <p>Lorem ipsum dolor sit amet.</p>
           </div>
-        </div>
-      </form>
+        </li>
+        <li class="item">
+          <div class="collapsible-header">
 
-      <div id="item_list">
+            <span class="item-header-item item-id">#21</span>
+            <span class="item-header-item item-name">CSDN</span>
+            <span class="new badge item-number teal lighten-2" data-badge-caption="">1</span>
+          </div>
+          <div class="collapsible-body">
+            <p>Lorem ipsum dolor sit amet.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
 
-      </div>
+    <div id='templates'>
+    </div>
 
-      <div id='templates'>
-        <div class="item">
-          
-        </div>
+    <div class="fixed-action-btn vertical click-to-toggle" id="bottom_menu">
+      <a class="btn-floating btn-large red">
+        <i class="material-icons">menu</i>
+      </a>
+      <ul>
+        <li>
+          <a class="btn-floating red" id="btn_add">
+            <i class="material-icons">add_circle</i>
+          </a>
+        </li>
+        <li>
+          <a class="btn-floating yellow darken-1" id="btn_export">
+            <i class="material-icons">share</i>
+          </a>
+        </li>
+        <li>
+          <a class="btn-floating green " id="btn_change_pass">
+            <i class="material-icons">security</i>
+          </a>
+        </li>
+        <li>
+            <a class="btn-floating blue " id="btn_help">
+              <i class="material-icons">help</i>
+            </a>
+          </li>
+      </ul>
+    </div>
 
-      </div>
   </div>
 
-  <script>
-    // You can also require other files to run in this process
-    require('./index.js')
-  </script>
+
 </body>
 
 </html>

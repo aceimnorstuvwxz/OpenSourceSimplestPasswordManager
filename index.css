@@ -1,4 +1,7 @@
 
+html, body{
+    min-height: 100vh;
+}
 
 #welcome_page{
     min-width: 100vw;
@@ -11,4 +14,30 @@
 
     margin-top: 30vh;
 
+}
+
+#bottom_menu{
+    display: none;
+}
+
+#main_page{
+    display: grid;
+    grid-auto-rows: auto 1fr 1fr;
+    min-height: 100vh;
+}
+
+
+#main_header{
+    padding: 0px 20px;
+
+}
+
+#main_items{
+    overflow:scroll;
+    padding: 0px 20px;
+}
+
+
+.item-header-item {
+    margin-right: 5px;
 }

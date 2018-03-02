@@ -1,9 +1,6 @@
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// All of the Node.js APIs are available in this process.
 const Store = require('electron-store');
 const store = new Store();
-const {dialog} = require('electron').remote
+const {dialog, shell} = require('electron').remote
 
 let g_file_path
 let g_password
@@ -26,6 +23,13 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     $('#enter').click(on_enter_click)
+
+    $('#bottom_menu').hide()
+    $('#main_page').hide()
+
+    $('#btn_help').click(function(){
+        shell.openExternal('https://github.com/fateleak/OpenSourceSimplestPasswordManager')
+    })
 })
 
 function check_file_state(){
@@ -50,4 +54,5 @@ function on_enter_click(){
 function on_enter_page(){
     $('#welcome_page').remove()
     $('#main_page').show()
+    $('#bottom_menu').show()
 }
