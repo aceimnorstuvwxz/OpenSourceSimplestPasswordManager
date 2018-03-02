@@ -21,12 +21,11 @@
       <form action="#">
         <div class="row">
           <div class="file-field input-field">
-            <div class="btn grey lighten-2">
-              <span>File</span>
-              <input type="file">
+            <div class="btn grey lighten-2" id="choose_file">
+              <span>Choose File</span>
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" type="text">
+              <input class="file-path validate" type="text" id="file_path">
             </div>
 
           </div>
@@ -38,18 +37,47 @@
           </div>
         </div>
         <div class="row" style="text-align:center;">
-
-          <a class="waves-effect waves-light btn" >Enter</a>
-
+          <a class="waves-effect waves-light btn" id="enter">Enter</a>
         </div>
       </form>
     </div>
 
   </div>
 
+  <div id="main_page">
+
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s8">
+            <input placeholder="Search" id="first_name" type="text" class="validate">
+            <!-- <label for="first_name">First Name</label> -->
+          </div>
+          
+          <div class="input-field col s2">
+              <a class="waves-effect waves-light btn">Find</a>
+          </div>
+
+          <div class="input-field col s2">
+              <a class="waves-effect waves-light btn">New</a>
+          </div>
+        </div>
+      </form>
+
+      <div id="item_list">
+
+      </div>
+
+      <div id='templates'>
+        <div class="item">
+          
+        </div>
+
+      </div>
+  </div>
+
   <script>
     // You can also require other files to run in this process
-    require('./renderer.js')
+    require('./index.js')
   </script>
 </body>
 
