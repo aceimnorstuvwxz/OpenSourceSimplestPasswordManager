@@ -3,12 +3,14 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
+const jsonfile = require('jsonfile')
 
 let mainWindow
 
-function createWindow () {
+function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1200, height: 600})
+    width: 1200, height: 600
+  })
 
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
@@ -25,7 +27,10 @@ app.on('ready', createWindow)
 
 app.on('window-all-closed', function () {
   // if (process.platform !== 'darwin') {
-    app.quit()
+    setTimeout(() => {
+      app.quit()
+
+    }, 1000);
   // }
 })
 
@@ -36,6 +41,15 @@ app.on('activate', function () {
 })
 
 
-electron.ipcMain.on('log', function(e, data){
+electron.ipcMain.on('log', function (e, data) {
   console.log('LOG', data)
+})
+
+electron.ipcMain.on('save', function (e, data) {
+  console.log('save')
+  jsonfile.writeFile(data.path, data.data, { flag: 'w' }, function (err) {
+    if (err) {
+      console.error(err)
+    }
+  })
 })

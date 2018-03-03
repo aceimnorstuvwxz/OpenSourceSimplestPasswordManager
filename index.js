@@ -5,7 +5,9 @@ const jsonfile = require('jsonfile')
 const mycrypto = require('./mycrypto')
 const path = require('path')
 const electron = require('electron')
+const generator = require('generate-password');
 
+const toast_time = 2000
 
 let g_system_file_path
 let g_system_password
@@ -43,15 +45,23 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#bottom_menu').hide()
     $('#main_page').hide()
 
+    $('#btn_add').click(on_add_record)
     $('#btn_help').click(function () {
         shell.openExternal('https://github.com/fateleak/OpenSourceSimplestPasswordManager')
+        $('.fixed-action-btn').closeFAB()
+    })
+    $('#btn_save').click(function() {
+        $(':focus').focusout()
+        setTimeout(() => {
+            save()
+        }, 100);
+        $('.fixed-action-btn').closeFAB()
     })
 
     setTimeout(() => {
         on_enter_click()
     }, 100)
 
-    $('#btn_add').click(on_add_record)
 })
 
 function check_file_state() {
@@ -95,28 +105,40 @@ function next_record_index() {
 let g_all_records_map = {} //index->record
 
 function on_add_record() {
+    let new_password = generator.generate({
+        length: 16,
+        numbers: true
+    })
+
     let new_record = {
         index: next_record_index(),
         title: "",
         username: "",
-        password: "",
+        password: new_password,
         system_password: g_system_password,
-        covered_password: "",
+        covered_password: mycrypto.encrypt(g_system_password, new_password),
         covered_system_password: mycrypto.encrypt(g_system_password, g_system_password),
         notes: ""
     }
+    Materialize.toast('Strong password has been generated', toast_time)
+
     g_all_records_map[new_record.index] = new_record
-    prepend_record_ui(new_record)
+    prepend_record_ui(new_record, true)
     $('#item_list').collapsible('open', 0)
     $('.fixed-action-btn').closeFAB()
 }
 
-function prepend_record_ui(record) {
+function prepend_record_ui(record, focus_edit=false) {
     let new_item_element = $('#new_item_template').clone()
     new_item_element.removeAttr('id')
     new_item_element.web_record = record
     setup_record_ui(new_item_element)
     new_item_element.prependTo('#item_list')
+    if (focus_edit) {
+        setTimeout(() => {
+            new_item_element.find('.my-input-title').focus()
+        }, 100);
+    }
 }
 
 function setup_record_ui(item_element) {
@@ -168,6 +190,15 @@ function setup_record_ui(item_element) {
         }
     })
 
+    item_element.find('.mybtn-delete').dblclick(function(e){
+        console.log('db click')
+        Materialize.toast(`Record #${item_element.web_record.index} has been deleted`, toast_time)
+        delete g_all_records_map[item_element.web_record.index]
+        save()
+        item_element.remove()
+        
+    })
+
     item_element.find('.mybtn-show').mouseover(function () {
         item_element.find('.my-input-password').attr('type', 'text')
     }).mouseout(function () {
@@ -176,8 +207,8 @@ function setup_record_ui(item_element) {
 
 }
 
-
 function save() {
+
     //save all records
     const temp_all_records = Object.assign({}, g_all_records_map);
 
@@ -188,11 +219,12 @@ function save() {
     }
     console.log('save', g_system_file_path, temp_all_records)
 
-    jsonfile.writeFile(g_system_file_path, temp_all_records, { flag: 'w' }, function (err) {
-        if (err) {
-            console.error(err)
-        }
+    electron.ipcRenderer.send('save', {
+        path: g_system_file_path,
+        data: temp_all_records
     })
+    // Materialize.toast(`Saving...`, toast_time)
+
 }
 
 
