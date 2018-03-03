@@ -58,6 +58,11 @@ document.addEventListener('DOMContentLoaded', function () {
         $('.fixed-action-btn').closeFAB()
     })
 
+    $('#search_input').on('input', function(){
+        console.log('input')
+        do_search_filter()
+    })
+
     setTimeout(() => {
         on_enter_click()
     }, 100)
@@ -247,4 +252,35 @@ function load_data_and_record_ui() {
             }
         }
     })
+}
+
+
+function do_search_filter(){
+    let keyword = $('#search_input').val()
+    keyword = keyword.toLowerCase()
+    let key_words = keyword.split(' ')
+    console.log('search with', key_words)
+    
+    $('.item').each(function(index, element){
+        let ele = $(element)
+        let title = ele.find('.item-title').text()
+        let notes = ele.find('.my-input-notes').val()
+        let under_mark = (title + ' ' + notes).toLowerCase()
+        let flag = true
+        console.log('againest', under_mark)
+        
+        key_words.forEach(function(word){
+            
+            if (!under_mark.includes(word)){
+                flag = false
+            } 
+        })
+
+        if(flag) {
+            ele.show()
+        } else {
+            ele.hide()
+        }
+    })
+    
 }
