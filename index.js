@@ -63,10 +63,11 @@ document.addEventListener('DOMContentLoaded', function () {
         do_search_filter()
     })
 
+    /*
     setTimeout(() => {
         on_enter_click()
     }, 100)
-
+*/
 })
 
 function check_file_state() {
