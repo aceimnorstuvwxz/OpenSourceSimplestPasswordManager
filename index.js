@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         shell.openExternal('https://github.com/fateleak/OpenSourceSimplestPasswordManager')
         $('.fixed-action-btn').closeFAB()
     })
-    $('#btn_save').click(function() {
+    $('#btn_save').click(function () {
         $(':focus').focusout()
         setTimeout(() => {
             save()
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $('.fixed-action-btn').closeFAB()
     })
 
-    $('#search_input').on('input', function(){
+    $('#search_input').on('input', function () {
         console.log('input')
         do_search_filter()
     })
@@ -134,7 +134,7 @@ function on_add_record() {
     $('.fixed-action-btn').closeFAB()
 }
 
-function prepend_record_ui(record, focus_edit=false) {
+function prepend_record_ui(record, focus_edit = false) {
     let new_item_element = $('#new_item_template').clone()
     new_item_element.removeAttr('id')
     new_item_element.web_record = record
@@ -184,25 +184,25 @@ function setup_record_ui(item_element) {
         let username = item_element.find('.my-input-username').val()
         let password = item_element.find('.my-input-password').val()
         console.log(title, username, password)
-        if (title.length > 0 && username.length > 0 && password.length > 0) {
-            item_element.web_record.title = title
-            item_element.web_record.username = username
-            item_element.web_record.password = password
-            item_element.web_record.notes = item_element.find('.my-input-notes').val()
-            item_element.web_record.covered_password = mycrypto.encrypt(g_system_password, item_element.web_record.password)
-            save()
-        } else {
-            console.log("input field check fail")
-        }
+        // if (title.length > 0 && username.length > 0 && password.length > 0) { //always can save
+        item_element.web_record.title = title
+        item_element.web_record.username = username
+        item_element.web_record.password = password
+        item_element.web_record.notes = item_element.find('.my-input-notes').val()
+        item_element.web_record.covered_password = mycrypto.encrypt(g_system_password, item_element.web_record.password)
+        save()
+        // } else {
+        // console.log("input field check fail")
+        // }
     })
 
-    item_element.find('.mybtn-delete').dblclick(function(e){
+    item_element.find('.mybtn-delete').dblclick(function (e) {
         console.log('db click')
         Materialize.toast(`Record #${item_element.web_record.index} has been deleted`, toast_time)
         delete g_all_records_map[item_element.web_record.index]
         save()
         item_element.remove()
-        
+
     })
 
     item_element.find('.mybtn-show').mouseover(function () {
@@ -242,10 +242,18 @@ function load_data_and_record_ui() {
             console.log(obj)
             for (let key in obj) {
                 let record = obj[key]
-                record.system_password = mycrypto.decrypt(g_system_password, record.covered_system_password)
-                record.password = mycrypto.decrypt(g_system_password, record.covered_password)
+                try {
+
+                    record.system_password = mycrypto.decrypt(g_system_password, record.covered_system_password)
+                    record.password = mycrypto.decrypt(g_system_password, record.covered_password)
+                }
+                catch (err) {
+                    console.error(err)
+                }
+
+                g_all_records_map[record.index] = record //数据一直有，但只显示和当前密码对的
+
                 if (record.system_password == g_system_password) {
-                    g_all_records_map[record.index] = record
                     prepend_record_ui(record)
                 } else {
                     console.log('bad record', record)
@@ -256,32 +264,32 @@ function load_data_and_record_ui() {
 }
 
 
-function do_search_filter(){
+function do_search_filter() {
     let keyword = $('#search_input').val()
     keyword = keyword.toLowerCase()
     let key_words = keyword.split(' ')
     console.log('search with', key_words)
-    
-    $('.item').each(function(index, element){
+
+    $('.item').each(function (index, element) {
         let ele = $(element)
         let title = ele.find('.item-title').text()
         let notes = ele.find('.my-input-notes').val()
         let under_mark = (title + ' ' + notes).toLowerCase()
         let flag = true
         console.log('againest', under_mark)
-        
-        key_words.forEach(function(word){
-            
-            if (!under_mark.includes(word)){
+
+        key_words.forEach(function (word) {
+
+            if (!under_mark.includes(word)) {
                 flag = false
-            } 
+            }
         })
 
-        if(flag) {
+        if (flag) {
             ele.show()
         } else {
             ele.hide()
         }
     })
-    
+
 }
