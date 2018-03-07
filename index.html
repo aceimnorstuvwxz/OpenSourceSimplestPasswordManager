@@ -13,6 +13,7 @@
   <script type="text/javascript" src="libs/jquery.js"></script>
   <script type="text/javascript" src="libs/hammer.js"></script>
   <script type="text/javascript" src="libs/materialize.min.js"></script>
+
   <script>if (window.module) module = window.module;</script>
 
   <link rel="stylesheet" href="index.css">
@@ -43,13 +44,14 @@
           </div>
 
           <div class="col s4 " style="margin-top:20px;">
-              <input type="checkbox" class="filled-in" id="filled-in-box"  />
-              <label for="filled-in-box">Auto Login</label>
-            </div>
+            <input type="checkbox" class="filled-in" id="autologin" />
+            <label for="autologin">Auto Login</label>
+          </div>
 
         </div>
         <div class="row" style="text-align:center;">
-          <a class="waves-effect waves-light btn" id="enter"><i class="material-icons right">keyboard_return</i>Enter</a>
+          <a class="waves-effect waves-light btn" id="enter">
+            <i class="material-icons right">keyboard_return</i>Enter</a>
         </div>
       </form>
     </div>
@@ -73,7 +75,7 @@
 
     <div id="main_items">
       <ul class="collapsible" data-collapsible="accordion" id="item_list">
-        
+
       </ul>
     </div>
 
@@ -87,37 +89,68 @@
           </div>
           <div class="collapsible-body">
             <div class="item-content-header">
+              <div class="row">
 
-              <div class="input-field col s12">
-                <input id="title" type="text" class="my-input-text my-input-title " value="aa">
-                <label for="title" class="mylabel">Title</label>
+                <div class="input-field col s10">
+                  <input id="title" type="text" class="my-input-text my-input-title " value="aa">
+                  <label for="title" class="mylabel">Title</label>
+                </div>
+
+              </div>
+              <div class="row">
+
+                <div class="input-field col s10">
+                  <input id="username" type="text" class="my-input-text my-input-username " value="aa">
+                  <label for="username" class="mylabel">Username</label>
+                </div>
+                <div class="input-field col s2">
+
+                  <a class="btn-floating waves-effect waves-light btn mybtn-copy-username grey lighten-2">
+                    <i class="material-icons">content_copy</i>
+                  </a>
+                </div>
+
               </div>
 
-              <div class="input-field col s12">
-                <input id="username" type="text" class="my-input-text my-input-username " value="aa">
-                <label for="username" class="mylabel">Username</label>
-              </div>
+              <div class="row">
 
-              <div class="input-field col s12">
-                <input id="password" type="password" class="my-input-text my-input-password " value="aa">
-                <label for="password" class="mylabel">Password</label>
-              </div>
+                <div class="input-field col s10">
+                  <input id="password" type="password" class="my-input-text my-input-password " value="aa">
+                  <label for="password" class="mylabel">Password</label>
+                </div>
 
-              <div class="input-field col s12">
-                <input id="notes" type="text" class="my-input-text my-input-notes " value="aa">
-                <label for="notes" class="mylabel">Notes</label>
-              </div>
+                <div class="input-field col s2">
 
-              <a  class="mysmall-text-button mybtn-show">Show</a>
+                  <a class="btn-floating waves-effect waves-light btn mybtn-copy-password grey lighten-2">
+                    <i class="material-icons">content_copy</i>
+                  </a>
+                </div>
+
+                <div class="row">
+
+                </div>
+                <div class="input-field col s10">
+                  <input id="notes" type="text" class="my-input-text my-input-notes " value="aa">
+                  <label for="notes" class="mylabel">Notes</label>
+                </div>
+                <div class="input-field col s2">
+
+                  <a class="btn-floating waves-effect waves-light btn mybtn-copy-notes grey lighten-2">
+                    <i class="material-icons">content_copy</i>
+                  </a>
+                </div>
+
+              </div>
+              <a class="mysmall-text-button mybtn-show">Show</a>
               <!-- <a href="#" class="mysmall-text-button mybtn-edit">Edit</a> -->
               <a href="#" class="mysmall-text-button mybtn-save">Save</a>
               <!-- TODO automatic save -->
 
-              <a  class="mysmall-text-button mybtn-delete " title="Need double click">Delete</a>
+              <a class="mysmall-text-button mybtn-delete " title="Need double click">Delete</a>
               <!-- <a href="#" class="mysmall-text-button mybtn-generate">Generate</a> -->
-              <a  class="mysmall-text-button mybtn-copy-username " title="Copy username">Copy Username</a>
+              <!-- <a  class="mysmall-text-button mybtn-copy-username " title="Copy username">Copy Username</a>
               <a  class="mysmall-text-button mybtn-copy-password " title="Copy Password">Copy Password</a>
-              <a  class="mysmall-text-button mybtn-copy-all" title="Copy All">Copy All</a>
+              <a  class="mysmall-text-button mybtn-copy-all" title="Copy All">Copy All</a> -->
 
             </div>
 
@@ -137,11 +170,11 @@
             <i class="material-icons">add</i>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a class="btn-floating yellow darken-1" id="btn_save">
             <i class="material-icons">save</i>
           </a>
-        </li>
+        </li> -->
         <li>
           <a class="btn-floating green " id="btn_change_pass">
             <i class="material-icons">security</i>
@@ -152,12 +185,19 @@
             <i class="material-icons">help</i>
           </a>
         </li>
+        <li>
+          <a class="btn-floating blue-grey " id="btn_logout">
+            <i class="material-icons">exit_to_app</i>
+          </a>
+        </li>
       </ul>
     </div>
 
   </div>
 
-
+  <audio>
+    <source src="libs/beep.mp3" />
+</audio>
 </body>
 
 </html>

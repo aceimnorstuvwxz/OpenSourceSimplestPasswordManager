@@ -58,6 +58,21 @@ document.addEventListener('DOMContentLoaded', function () {
         $('.fixed-action-btn').closeFAB()
     })
 
+    $('#btn_logout').click(function () {
+        store.delete('autologin')
+
+        save()
+
+        $('#welcome_page').show()
+        $('#main_page').hide()
+        $('#bottom_menu').hide()
+
+        //clear data
+        g_all_records_map = {}
+        $('#item_list').empty()
+        g_can_save = false
+    })
+
     $('#search_input').on('input', function () {
         console.log('input')
         do_search_filter()
@@ -68,6 +83,12 @@ document.addEventListener('DOMContentLoaded', function () {
         on_enter_click()
     }, 100)
 */
+    console.log('login', store.get('autologin'))
+    if (store.get('autologin') != null) {
+        $('#password').val(store.get('autologin'))
+
+        on_enter_click()
+    }
 })
 
 function check_file_state() {
@@ -79,7 +100,14 @@ function check_file_state() {
 function on_enter_click() {
     let file_path = $('#file_path').val()
     let password = $('#password').val()
+    if ($('#autologin:checked').val()) {
+        console.log('autologin')
+        store.set('autologin', password)
+    } else {
+        console.log('no auto login')
+    }
     // check file
+
 
     // enter page
     g_system_file_path = file_path
@@ -90,11 +118,12 @@ function on_enter_click() {
 }
 
 function on_enter_page() {
-    $('#welcome_page').remove()
+    $('#welcome_page').hide()
     $('#main_page').show()
     $('#bottom_menu').show()
 
     load_data_and_record_ui()
+    g_can_save = true
 }
 
 function next_record_index() {
@@ -109,6 +138,7 @@ function next_record_index() {
 }
 
 let g_all_records_map = {} //index->record
+let g_can_save = false
 
 function on_add_record() {
     let new_password = generator.generate({
@@ -211,9 +241,32 @@ function setup_record_ui(item_element) {
         item_element.find('.my-input-password').attr('type', 'password')
     })
 
+    item_element.find('.mybtn-copy-username').click(function () {
+        electron.clipboard.writeText(item_element.find('.my-input-username').val())
+        copy_sound()
+    })
+
+    item_element.find('.mybtn-copy-password').click(function () {
+        electron.clipboard.writeText(item_element.find('.my-input-password').val())
+        copy_sound()
+    })
+
+    item_element.find('.mybtn-copy-notes').click(function () {
+        electron.clipboard.writeText(item_element.find('.my-input-notes').val())
+        copy_sound()
+    })
+
+}
+
+function copy_sound() {
+    let audio = document.getElementsByTagName("audio")[0]
+    audio.play()
 }
 
 function save() {
+    if (!g_can_save) {
+        return
+    }
 
     //save all records
     const temp_all_records = Object.assign({}, g_all_records_map);
@@ -223,13 +276,13 @@ function save() {
         delete temp_rec.password
         delete temp_rec.system_password
     }
+
     console.log('save', g_system_file_path, temp_all_records)
 
     electron.ipcRenderer.send('save', {
         path: g_system_file_path,
         data: temp_all_records
     })
-    // Materialize.toast(`Saving...`, toast_time)
 
 }
 

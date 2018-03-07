@@ -86,7 +86,7 @@ html, body{
 }
 .mylabel{
     top: -10px !important;
-    left: 0px !important;
+    /* left: 0px !important; */
 }
 
 .bold{
@@ -111,4 +111,8 @@ html, body{
 
 .mysmall-icon-button:active{
     text-shadow: none;
+}
+
+.row{
+    margin-bottom: 5px !important;
 }
